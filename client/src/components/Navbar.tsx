@@ -78,9 +78,9 @@ const Navbar = () => {
         <Button variant="secondary" onClick={() => navigate("/")}>
           Home
         </Button>
-        <Button variant="secondary" onClick={() => navigate("/favourites")}>
+        {/* <Button variant="secondary" onClick={() => navigate("/favourites")}>
           Favourites
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
