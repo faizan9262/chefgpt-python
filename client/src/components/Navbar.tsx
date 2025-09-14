@@ -1,6 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { href, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-// import { useAuth } from "@/Context/AuthContext";
 import { logoutUser } from "@/helper/api";
 import { toast } from "sonner";
 import {
@@ -8,30 +7,30 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-// import { useAuth } from '@/Context/AuthContext';
+import { useAuth } from "@/Context/AuthContext";
+import avtar from '../assets/avatar.png'
 
 const Navbar = () => {
   const navigate = useNavigate();
 
-  // const auth = useAuth();
+  const auth = useAuth();
 
-  // const handleLogout = async () => {
-  //   try {
-  //     toast.loading("Logging out...", { id: "logout" });
-  //     await logoutUser();
-  //     auth.setUser({
-  //       username: "",
-  //       email: "",
-  //       profilePicture: "",
-  //     });
-  //     auth.setIsLoggedIn(false);
-  //     navigate("/login");
-  //     toast.success("Logout successful!", { id: "logout" });
-  //   } catch (error) {
-  //     toast.error("Logout failed. Please try again.");
-  //     console.error("Logout error:", error);
-  //   }
-  // };
+  const handleLogout = async () => {
+    try {
+      toast.loading("Logging out...", { id: "logout" });
+      await logoutUser();
+      auth.setUser({
+        username: "",
+        email: "",
+      });
+      auth.setIsLoggedIn(false);
+      navigate("/login");
+      toast.success("Logout successful!", { id: "logout" });
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+      console.error("Logout error:", error);
+    }
+  };
 
   return (
     <div className="bg-blue-300 sticky top-0 p-3 flex items-center justify-between gap-6 z-30">
@@ -42,7 +41,7 @@ const Navbar = () => {
         Chef-GPT
       </h1>
       <div className="flex items-end gap-5">
-        {/* {auth.isLoggedIn ? (
+        {auth.isLoggedIn ? (
           <>
             <Button variant="secondary" onClick={() => navigate("/")}>
               Home
@@ -55,7 +54,7 @@ const Navbar = () => {
               <PopoverTrigger>
                 <img
                   src={
-                    auth?.profilePicture || "https://via.placeholder.com/150"
+                    avtar
                   }
                   alt="Profile"
                   className="w-9 h-9 rounded-full cursor-pointer"
@@ -74,13 +73,7 @@ const Navbar = () => {
           <Button variant="secondary" onClick={() => navigate("/login")}>
             Login
           </Button>
-        )} */}
-        <Button variant="secondary" onClick={() => navigate("/")}>
-          Home
-        </Button>
-        {/* <Button variant="secondary" onClick={() => navigate("/favourites")}>
-          Favourites
-        </Button> */}
+        )}
       </div>
     </div>
   );

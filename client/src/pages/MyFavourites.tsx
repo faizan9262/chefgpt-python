@@ -25,6 +25,9 @@ const MyFavourites = () => {
     getFavorites();
   }, []);
 
+  console.log("Dishes",dishContext.favorites[0]);
+  
+
   // Skeleton card component
   const SkeletonCard = () => (
     <div className="rounded-3xl bg-white p-4 shadow space-y-4 h-[400px]">
@@ -71,7 +74,7 @@ const MyFavourites = () => {
           >
             {dishContext?.favorites.map((fav: any) => (
               <motion.div
-                key={fav._id}
+                key={fav.id}
                 variants={{
                   hidden: { opacity: 0, y: 30 },
                   show: { opacity: 1, y: 0 },
@@ -81,7 +84,7 @@ const MyFavourites = () => {
                   image={fav.image}
                   name={fav.name}
                   description={fav.description}
-                  favoriteId={fav._id}
+                  favoriteId={fav.id}
                 />
               </motion.div>
             ))}

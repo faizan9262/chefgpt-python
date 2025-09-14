@@ -1,83 +1,78 @@
-// import { getUserProfile } from "@/helper/api";
-// import {
-//   createContext,
-//   useContext,
-//   useEffect,
-//   useState,
-//   type ReactNode,
-// } from "react";
+import { getUserProfile } from "@/helper/api";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
-// type AuthContextType = {
-//   username: string;
-//   email: string;
-//   profilePicture: string;
-//   setUser: (user: Partial<UserData>) => void;
-//   isLoggedIn: boolean;
-//   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-// };
+type AuthContextType = {
+  username: string;
+  email: string;
+  setUser: (user: Partial<UserData>) => void;
+  isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-// type UserData = {
-//   username: string;
-//   email: string;
-//   profilePicture: string;
-// };
+type UserData = {
+  username: string;
+  email: string;
+};
 
-// // Create context
-// const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// Create context
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// // Provider
-// export const AuthProvider = ({ children }: { children: ReactNode }) => {
-//   const [user, setUserState] = useState<UserData>({
-//     username: "",
-//     email: "",
-//     profilePicture:"",
-//   });
-//   const [isLoggedIn,setIsLoggedIn] = useState<boolean>(false);
+// Provider
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUserState] = useState<UserData>({
+    username: "",
+    email: "",
+  });
+  const [isLoggedIn,setIsLoggedIn] = useState<boolean>(false);
 
-//   const setUser = (newUser: Partial<UserData>) => {
-//     setUserState((prev) => ({
-//       ...prev,
-//       ...newUser,
-//     }));
-//   };
+  const setUser = (newUser: Partial<UserData>) => {
+    setUserState((prev) => ({
+      ...prev,
+      ...newUser,
+    }));
+  };
   
-//   useEffect(()=>{
-//     const fetchUserProfile = async () => {
-//       try {
-//         const response = await getUserProfile();
-//         if (response) {
-//           setUser({
-//             username: response.username,
-//             email: response.email,
-//             profilePicture: response.profilePicture || "",
-//           });
-//           setIsLoggedIn(true);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching user profile:", error);
-//       }
-//     };
+  useEffect(()=>{
+    const fetchUserProfile = async () => {
+      try {
+        const response = await getUserProfile();
+        if (response) {
+          setUser({
+            username: response.username,
+            email: response.email,
+          });
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
 
-//     fetchUserProfile();
-//   },[])
+    fetchUserProfile();
+  },[])
 
-//   const value: AuthContextType = {
-//     username: user.username,
-//     email: user.email,
-//     profilePicture: user.profilePicture,
-//     setUser,
-//     isLoggedIn,
-//     setIsLoggedIn
-//   };
+  const value: AuthContextType = {
+    username: user.username,
+    email: user.email,
+    setUser,
+    isLoggedIn,
+    setIsLoggedIn
+  };
 
-//   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-// };
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
 
-// // Hook to use context
-// export const useAuth = () => {
-//   const context = useContext(AuthContext);
-//   if (!context) {
-//     throw new Error("useAuth must be used within an AuthProvider");
-//   }
-//   return context;
-// };
+// Hook to use context
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

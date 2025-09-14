@@ -17,7 +17,7 @@ interface Favorite {
   description: string;
   image: string;
   recipe: string[];
-  _id?: string; 
+  id?: number; 
 }
 
 interface DishContextType {

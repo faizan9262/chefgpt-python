@@ -180,13 +180,13 @@ const Dish = () => {
               </span>
             ))}
           </div>
-          {/* <Button
+          <Button
             onClick={handleAddToFavorites}
             disabled={!image || steps.length === 0}
             className="bg-blue-950 flex gap-1 items-center justify-center w-1/2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Add to Favourites <HeartPlus />
-          </Button> */}
+          </Button>
         </div>
       </motion.div>
 

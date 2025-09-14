@@ -41,35 +41,14 @@ const FavoriteDish = () => {
     }
   }, [recipe, image]);
 
-  console.log("Received recipe:", favRecipe);
-
-  const extractSteps = (text: string): string[] => {
-    const lines = text
-      .split(/\n+/)
-      .map((line) => line.trim())
-      .filter(Boolean);
-    const steps: string[] = [];
-    let currentStep = "";
-
-    lines.forEach((line) => {
-      if (/^\d+[\.\)]\s*/.test(line)) {
-        if (currentStep) steps.push(currentStep.trim());
-        currentStep = line;
-      } else {
-        currentStep += `\n${line}`;
-      }
-    });
-
-    if (currentStep) steps.push(currentStep.trim());
-    return steps.length > 0 ? steps : ["No clear steps found in the recipe."];
-  };
+  console.log("Received recipe:", image);
 
   const removeFavorite = async () => {
     try {
       toast.loading("Removing favorite...", { id: "remove-fav" });
       const response = await removeFromFavorites(favoriteId);
       dishContext.setFavorites((prev) =>
-        prev.filter((fav) => fav._id !== favoriteId)
+        prev.filter((fav) => fav.id !== favoriteId)
       );
       navigate("/favourites")
       toast.success("Favorite removed successfully!", { id: "remove-fav" });
@@ -91,7 +70,10 @@ const FavoriteDish = () => {
     );
   };
 
-  const steps = favRecipe ?? [];
+  const steps = Array.isArray(favRecipe) ? favRecipe : [];
+
+  console.log("Steps: ",favRecipe);
+  
 
   return (
     <div className="max-w-6xl mx-auto py-10 px-4 space-y-10">

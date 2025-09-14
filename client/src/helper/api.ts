@@ -2,7 +2,11 @@ import axios from "axios";
 
 export const loginUser = async (email: string, password: string) => {
   try {
-    const response = await axios.post("/login", { email, password });
+    const response = await axios.post(
+      "/auth/login",
+      { email, password },
+      { withCredentials: true }
+    );
     if (response.status !== 200) {
       console.log("Something went wrong while logging in.");
     }
@@ -18,11 +22,15 @@ export const regiterUser = async (
   password: string
 ) => {
   try {
-    const response = await axios.post("/register", {
-      username,
-      email,
-      password,
-    });
+    const response = await axios.post(
+      "/auth/register",
+      {
+        username,
+        email,
+        password,
+      },
+      { withCredentials: true }
+    );
     if (response.status !== 200) {
       console.log("Something went wrong while siging in.");
     }
@@ -34,7 +42,7 @@ export const regiterUser = async (
 
 export const getUserProfile = async () => {
   try {
-    const response = await axios.get("/verify");
+    const response = await axios.post("/auth/verify");
     if (response.status !== 200) {
       console.log("Something went wrong while getting user profile.");
     }
@@ -46,7 +54,7 @@ export const getUserProfile = async () => {
 
 export const logoutUser = async () => {
   try {
-    const response = await axios.post("/logout");
+    const response = await axios.post("/auth/logout");
     if (response.status !== 200) {
       console.log("Something went wrong while logging out.");
     }
@@ -56,9 +64,19 @@ export const logoutUser = async () => {
   }
 };
 
-export const addToFavorites = async (name: string,description:string,recipe:string[],image:string|null) => {
+export const addToFavorites = async (
+  name: string,
+  description: string,
+  recipe: string[],
+  image: string | null
+) => {
   try {
-    const response = await axios.post("/add-favorite", { name,description, recipe, image });
+    const response = await axios.post("/favorite/add", {
+      name,
+      description,
+      recipe,
+      image,
+    });
     if (response.status !== 200) {
       console.log("Something went wrong while adding to favorites.");
     }
@@ -66,11 +84,11 @@ export const addToFavorites = async (name: string,description:string,recipe:stri
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const removeFromFavorites = async (favoriteId: string) => {
+export const removeFromFavorites = async (favoriteId: number) => {
   try {
-    const response = await axios.post("/remove-favorite", { favoriteId });
+    const response = await axios.post("favorite/remove", { id: favoriteId });
     if (response.status !== 200) {
       console.log("Something went wrong while removing from favorites.");
     }
@@ -78,11 +96,11 @@ export const removeFromFavorites = async (favoriteId: string) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getFavoritesOfUser = async () => {
   try {
-    const response = await axios.get("/get-favorite");
+    const response = await axios.get("favorite/get-all");
     if (response.status !== 200) {
       console.log("Something went wrong while getting favorites.");
     }
@@ -90,7 +108,7 @@ export const getFavoritesOfUser = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getSuggetions = async (item: string[], info: string) => {
   try {
@@ -123,7 +141,6 @@ export const getSuggetionsByName = async (text: string) => {
   }
 };
 
-
 export const fullRecipe = async (
   dishName: string,
   dishDescription: string,
@@ -148,4 +165,3 @@ export const fullRecipe = async (
     throw error;
   }
 };
-

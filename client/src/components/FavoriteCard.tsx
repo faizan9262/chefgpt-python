@@ -20,7 +20,7 @@ interface FavoriteCardProps {
   image: string;
   name: string;
   description: string;
-  favoriteId: string;
+  favoriteId: number;
 }
 
 const FavoriteCard = ({
@@ -39,7 +39,7 @@ const FavoriteCard = ({
       toast.loading("Removing favorite...", { id: "remove-fav" });
       const response = await removeFromFavorites(favoriteId);
       dishContext.setFavorites((prev) =>
-        prev.filter((fav) => fav._id !== favoriteId)
+        prev.filter((fav) => fav.id !== favoriteId)
       );
       toast.success("Favorite removed successfully!", { id: "remove-fav" });
     } catch (error) {
@@ -54,7 +54,7 @@ const FavoriteCard = ({
       name,
       description,
       image,
-      recipe: dishContext?.favorites.find(fav => fav._id === favoriteId)?.recipe || [],
+      recipe: dishContext?.favorites.find(fav => fav.id === favoriteId)?.recipe || [],
       id: favoriteId
     }});
   }
