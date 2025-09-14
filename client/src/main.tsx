@@ -7,7 +7,8 @@ import { Toaster } from "sonner";
 import { DishContextProvider } from "./Context/DishContext.tsx";
 import { AuthProvider } from "./Context/AuthContext.tsx";
 
-axios.defaults.baseURL = "http://localhost:8000";
+// axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.baseURL = "https://3d0c7802bfd2.ngrok-free.app";
 // axios.defaults.baseURL = "https://chef-gpt-ai-server.vercel.app/api";
 axios.defaults.withCredentials = true;
 
