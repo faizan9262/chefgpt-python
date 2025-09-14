@@ -36,15 +36,25 @@ async def register_user(user_credentials: RegisterInput, db: Session):
             "message": "Registration successful"
         }
     )
+    # response.set_cookie(
+    #     key="access_token",
+    #     value=access_token,
+    #     httponly=True,  
+    #     secure=False,   
+    #     samesite="Lax",  
+    #     max_age=60 * 60 * 24 * 7 ,
+    #     path="/"
+    # )
+    
     response.set_cookie(
-        key="access_token",
-        value=access_token,
-        httponly=True,  
-        secure=False,   
-        samesite="Lax",  
-        max_age=60 * 60 * 24 * 7 ,
-        path="/"
-    )
+    key="access_token",
+    value=access_token,
+    httponly=True,
+    secure=True,        # must be True on production (HTTPS required)
+    samesite="None",    # allow cross-site cookies
+    max_age=60 * 60 * 24 * 7,
+    path="/"
+)
 
     return response
 
@@ -74,15 +84,25 @@ async def login_user(user_credentials:LoginInput,db:Session):
             "message": "Login successful"
         }
     )
+    # response.set_cookie(
+    #     key="access_token",
+    #     value=access_token,
+    #     httponly=True,  
+    #     secure=False,     
+    #     samesite="Lax",  
+    #     max_age=60 * 60 * 24 * 7  ,
+    #     path="/"
+    # )
+    
     response.set_cookie(
-        key="access_token",
-        value=access_token,
-        httponly=True,  
-        secure=False,     
-        samesite="Lax",  
-        max_age=60 * 60 * 24 * 7  ,
-        path="/"
-    )
+    key="access_token",
+    value=access_token,
+    httponly=True,
+    secure=True,        # must be True on production (HTTPS required)
+    samesite="None",    # allow cross-site cookies
+    max_age=60 * 60 * 24 * 7,
+    path="/"
+)
     
     
     return response
